@@ -1,5 +1,7 @@
 package com.kh.controller;
 
+import java.util.ArrayList;
+
 import com.kh.model.dao.MemberDao;
 import com.kh.model.vo.Member;
 import com.kh.view.MemberMenu;
@@ -35,5 +37,77 @@ public class MemberController {
 		
 	}
 
+	public void selectList() {
+		ArrayList<Member> list = new MemberDao().selectList();
+		
+		// 조회된 결과에 따라서 사용자가 보게될 응답화면 지정
+		if (list.isEmpty()) { // list가 비어있을 경우
+			new MemberMenu().displayNoData("전체 조회 결과가 없습니다.");
+		} else { // 조회된 데이터가 있을 경우
+			new MemberMenu().displayMemberList(list);
+		}
+		
+		
+	} // void selectList()
 
-}
+	/**
+	 * 사용자의 아이디로 회원 검색 요청을 처리해주는 메서드
+	 * @param userId : 사용자가 입력한 검색하고자 하는 회원 아이디
+	 */
+	public void selectByUserId(String userId) {
+		Member m = new MemberDao().selectByUserId(userId);
+		
+		if (m == null) { // 검색 결과가 없는 경우
+			new MemberMenu().displayNoData(userId + "에 해당하는 조회 결과가 없습니다.");
+		} else { // 검색결과가 있을 경우
+			new MemberMenu().displayMember(m);
+		}
+	}
+	
+	/**
+	 * 이름으로 키워드 검색 요청시 처리해주는 메서드
+	 * @param keyword : 사용자가 입력한 검색할 키워드명
+	 */
+	public void selectByUserName(String keyword) {
+		ArrayList<Member> list = new MemberDao().selectByUserName(keyword);
+		
+		if (list.isEmpty()) { // list가 비어있을 경우
+			new MemberMenu().displayNoData(keyword + "에 해당하는 조회 결과가 없습니다.");
+		} else { // 조회된 데이터가 있을 경우
+			new MemberMenu().displayMemberList(list);
+		}
+		
+	}
+	
+	public void updateMember(String userId, String userPwd, String email, String phone, String address) {
+		Member m = new Member();
+		m.setUserId(userId);
+		m.setUserPwd(userPwd);
+		m.setEmail(email);
+		m.setPhone(phone);
+		m.setAddress(address);
+		
+		int result = new MemberDao().updateMember(m);
+		
+		if (result > 0) {
+			new MemberMenu().displaySuccess("성공적으로 회원 정보 변경 되었습니다.");
+		} else {
+			new MemberMenu().displayFail("회원 정보 변경에 실패하였습니다.");
+		}
+	}
+	
+	public void deleteMember(String userId) {
+		int result = new MemberDao().deleteMember(userId);
+		
+		if (result > 0) {
+			new MemberMenu().displaySuccess("성공적으로 회원 탈퇴 처리 되었습니다.");
+		} else {
+			new MemberMenu().displayFail("회원 탈퇴에 실패하였습니다.");
+		}
+		
+	}
+
+	
+
+
+} // class MemberController
