@@ -28,7 +28,8 @@ public class MemberMenu {
 			System.out.println("3. 회원 아이디 검색");
 			System.out.println("4. 회원 이름으로 키워드 검색");
 			System.out.println("5. 회원 정보 변경");
-			System.out.println("6. 회원 탈퇴"); 
+			System.out.println("6. 회원 탈퇴");
+			System.out.println("7. 로그인");
 			System.out.println("0. 프로그램 종료");
 			
 			System.out.print(">> 메뉴 선택 : ");
@@ -60,6 +61,10 @@ public class MemberMenu {
 //				String userId = inputMemberId();
 //				mc.deleteMember(userId);
 				mc.deleteMember(inputMemberId());
+
+				break;
+			case 7: 
+				mc.loginMember(inputMemberId(), inputMemberPwd());
 
 				break;
 			case 0:
@@ -117,6 +122,11 @@ public class MemberMenu {
 	
 	public String inputMemberName() {
 		System.out.print("\n회원 이름(키워드) 입력 : ");
+		return sc.nextLine();
+	}
+	
+	public String inputMemberPwd() {
+		System.out.print("\n회원 비밀번호 입력 : ");
 		return sc.nextLine();
 	}
 	

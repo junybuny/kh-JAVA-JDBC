@@ -108,6 +108,18 @@ public class MemberController {
 			new MemberMenu().displayFail(userId + "회원 삭제에 실패하였습니다.");
 		}
 	}
+	
+	public void loginMember(String userId, String userPwd) {
+		
+		int result = new MemberService().loginMember(userId, userPwd);
+		
+		if (result > 0) {
+			new MemberMenu().displaySuccess(userId + "회원님 환영합니다.");
+		} else {
+			new MemberMenu().displayFail("로그인에 실패하였습니다.");
+		}
+		
+	}
 
 
 } // class MemberController

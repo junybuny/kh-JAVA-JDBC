@@ -32,4 +32,9 @@
 		DELETE FROM MEMBER
 		WHERE USERID = ?
 	</entry>
+	<entry key="loginMember">
+		SELECT USERID
+		FROM MEMBER
+		WHERE USERID = ? AND USERPWD = ?
+	</entry>
 </properties>
